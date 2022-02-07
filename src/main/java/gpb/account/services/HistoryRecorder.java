@@ -1,8 +1,8 @@
 package gpb.account.services;
 
+import gpb.account.dto.CurrentAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import gpb.account.dto.AbstractAccount;
 import gpb.account.entity.AccountEntity;
 import gpb.account.repo.AccountRepo;
 
@@ -11,9 +11,9 @@ public class HistoryRecorder {
     @Autowired
     private AccountRepo accountRepo;
 
-    public void getAccountInfo(AbstractAccount abstractAccount) {
+    public void getAccountInfo(CurrentAccount account) {
         AccountEntity byClientId =
-                accountRepo.findByClientId(abstractAccount.getClientId());
+                accountRepo.findByClientId(account.getClientId());
 
     }
 }
