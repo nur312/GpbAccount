@@ -24,10 +24,10 @@ public class OperationHistoryEntity {
     @Column(name = "account_no")
     private Integer accountNo;
     @ManyToOne
-    @JoinColumn(name = "account_no", referencedColumnName = "account_no")
+    @JoinColumn(name = "account_no_ae", referencedColumnName = "account_no")
     private AccountEntity accountByAccountNo;
     @ManyToOne
-    @JoinColumn(name = "account_no", referencedColumnName = "account_no")
+    @JoinColumn(name = "account_no_bac", referencedColumnName = "account_no")
     private BankAccountEntity bankAccountByAccountNo;
 
     public int getHistoryId() {
