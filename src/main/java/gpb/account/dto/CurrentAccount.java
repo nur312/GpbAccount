@@ -22,6 +22,7 @@ public class CurrentAccount {
     private Boolean isFrozen;
 
     // Прописать
+    // retail, corparate
     private String clientType = "physic";
     private String accountType = "current";
 }

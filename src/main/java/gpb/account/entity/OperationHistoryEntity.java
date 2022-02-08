@@ -23,12 +23,12 @@ public class OperationHistoryEntity {
     @Basic
     @Column(name = "account_no")
     private Integer accountNo;
-    @ManyToOne
-    @JoinColumn(name = "account_no_ae", referencedColumnName = "account_no")
+    /*@ManyToOne
+    @JoinColumn(name = "account_no", referencedColumnName = "account_no")
     private AccountEntity accountByAccountNo;
     @ManyToOne
-    @JoinColumn(name = "account_no_bac", referencedColumnName = "account_no")
-    private BankAccountEntity bankAccountByAccountNo;
+    @JoinColumn(name = "bank_account_no", referencedColumnName = "bank_account_no")
+    private BankAccountEntity bankAccountByAccountNo;*/
 
     public int getHistoryId() {
         return historyId;
@@ -83,19 +83,19 @@ public class OperationHistoryEntity {
         return Objects.hash(historyId, amount, operationDate, operationType, accountNo);
     }
 
-    public AccountEntity getAccountByAccountNo() {
-        return accountByAccountNo;
-    }
-
-    public void setAccountByAccountNo(AccountEntity accountByAccountNo) {
-        this.accountByAccountNo = accountByAccountNo;
-    }
-
-    public BankAccountEntity getBankAccountByAccountNo() {
-        return bankAccountByAccountNo;
-    }
-
-    public void setBankAccountByAccountNo(BankAccountEntity bankAccountByAccountNo) {
-        this.bankAccountByAccountNo = bankAccountByAccountNo;
-    }
+//    public AccountEntity getAccountByAccountNo() {
+//        return accountByAccountNo;
+//    }
+//
+//    public void setAccountByAccountNo(AccountEntity accountByAccountNo) {
+//        this.accountByAccountNo = accountByAccountNo;
+//    }
+//
+//    public BankAccountEntity getBankAccountByAccountNo() {
+//        return bankAccountByAccountNo;
+//    }
+//
+//    public void setBankAccountByAccountNo(BankAccountEntity bankAccountByAccountNo) {
+//        this.bankAccountByAccountNo = bankAccountByAccountNo;
+//    }
 }
