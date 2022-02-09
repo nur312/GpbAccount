@@ -15,9 +15,19 @@ public class WithdrawService {
         this.accountRepo = accountRepo;
     }
 
-    public void withdraw(AccountEntity account) {
+    public void withdraw(int account_no, double amount) {
+        boolean exists = accountRepo.existsById(account_no);
+        if(!exists){
+            throw new IllegalArgumentException("No such account with account_no = " + account_no);
+        }
+        AccountEntity account = accountRepo.getById(account_no);
 
-        // ToDo снять деньги
+        double newActualBalance = account.getActualBalance() - amount;
+        if(newActualBalance < 0){
+            throw new IllegalStateException("Balance cannot be negative for " + account_no);
+        }
+        account.setActualBalance(newActualBalance);
         accountRepo.save(account);
+
     }
 }

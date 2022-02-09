@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "operation_history", schema = "public", catalog = "postgres")
-public class OperationHistoryEntity {
+public class  OperationHistoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "history_id")
