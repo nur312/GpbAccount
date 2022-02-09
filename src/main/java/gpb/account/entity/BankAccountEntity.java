@@ -1,15 +1,10 @@
 package gpb.account.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "bank_account", schema = "public", catalog = "postgres")
-@Getter
-@Setter
 public class BankAccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,7 +17,29 @@ public class BankAccountEntity {
     @Column(name = "debit_funds")
     private Double debitFunds;
 
+    public int getBankAccountNo() {
+        return bankAccountNo;
+    }
 
+    public void setBankAccountNo(int bankAccountNo) {
+        this.bankAccountNo = bankAccountNo;
+    }
+
+    public Double getCreditFunds() {
+        return creditFunds;
+    }
+
+    public void setCreditFunds(Double creditFunds) {
+        this.creditFunds = creditFunds;
+    }
+
+    public Double getDebitFunds() {
+        return debitFunds;
+    }
+
+    public void setDebitFunds(Double debitFunds) {
+        this.debitFunds = debitFunds;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -5,15 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CurrentAccount {
+public class Account {
 
-    private BigInteger accountNumber;
+    private Long accountNumber;
     private Long clientId;
     private Long accountId;
     private BigDecimal balance;
@@ -21,8 +20,6 @@ public class CurrentAccount {
     private Long historyId;
     private Boolean isFrozen;
 
-    // Прописать
-    // retail, corparate
-    private String clientType = "physic";
-    private String accountType = "current";
+    private ClientType clientType;
+    private AccountType accountType;
 }
