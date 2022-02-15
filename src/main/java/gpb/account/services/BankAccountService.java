@@ -16,26 +16,34 @@ public class BankAccountService {
         this.bankAccountRepo = bankAccountRepo;
     }
 
-    public void deposit(double amount, @Value("${bank-account-no}") String Id){
+    public void deposit(double amount, @Value("${bank-account-no}") String Id) {
 
 //        ToDo спросить про банк аккаунт номер(пока заглушка = 0)
         BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
-        double newDepositedFunds = bankAccount.getDebitFunds()+amount;
+        double newDepositedFunds = bankAccount.getFunds() + amount;
 
-        bankAccount.setDebitFunds(newDepositedFunds);
+        bankAccount.setFunds(newDepositedFunds);
         bankAccountRepo.save(bankAccount);
     }
 
-    public void withdraw(double amount, @Value("${bank-account-no}") String Id){
+    public void withdraw(double amount, @Value("${bank-account-no}") String Id) {
 //      ToDo докурутить логику выдачи кредитов(оставить одну переменную в базе для аккаунта)
         BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
 
-        double newCreditedFunds = bankAccount.getCreditFunds()+amount;
-        if(newCreditedFunds > bankAccount.getDebitFunds()){
+        double newCreditedFunds = bankAccount.getFunds() - amount;
+        if (newCreditedFunds < 0) {
 
+            throw new IllegalStateException("Noе enough money to withdraw");
         }
-        bankAccount.setDebitFunds(newCreditedFunds);
+        bankAccount.setFunds(newCreditedFunds);
         bankAccountRepo.save(bankAccount);
+    }
+
+    public  double getActualBalance(@Value("${bank-account-no}") String Id) {
+
+        BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
+
+        return bankAccount.getFunds();
     }
 
 }

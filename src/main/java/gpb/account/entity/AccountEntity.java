@@ -1,5 +1,8 @@
 package gpb.account.entity;
 
+import gpb.account.dto.AccountType;
+import gpb.account.dto.ClientType;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -18,15 +21,19 @@ public class AccountEntity {
     @Basic
     @Column(name = "actual_balance")
     private Double actualBalance;
+
+    @Enumerated(EnumType.STRING)
     @Basic
     @Column(name = "account_type")
-    private String accountType;
+    private AccountType accountType;
     @Basic
     @Column(name = "is_frozen")
     private Boolean isFrozen;
+
+    @Enumerated(EnumType.STRING)
     @Basic
     @Column(name = "client_type")
-    private String clientType;
+    private ClientType clientType;
 
     public int getAccountNo() {
         return accountNo;
@@ -53,11 +60,11 @@ public class AccountEntity {
         this.actualBalance = actualBalance;
     }
 
-    public String getAccountType() {
+    public AccountType getAccountType() {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }
 
@@ -69,11 +76,11 @@ public class AccountEntity {
         isFrozen = frozen;
     }
 
-    public String getClientType() {
+    public ClientType getClientType() {
         return clientType;
     }
 
-    public void setClientType(String clientType) {
+    public void setClientType(ClientType clientType) {
         this.clientType = clientType;
     }
 
