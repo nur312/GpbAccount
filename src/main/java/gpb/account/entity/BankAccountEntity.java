@@ -6,16 +6,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "bank_account", schema = "public", catalog = "postgres")
 public class BankAccountEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Id
     @Column(name = "bank_account_no")
     private int bankAccountNo;
     @Basic
-    @Column(name = "credit_funds")
-    private Double creditFunds;
-    @Basic
-    @Column(name = "debit_funds")
-    private Double debitFunds;
+    @Column(name = "funds")
+    private double funds;
 
     public int getBankAccountNo() {
         return bankAccountNo;
@@ -25,20 +22,12 @@ public class BankAccountEntity {
         this.bankAccountNo = bankAccountNo;
     }
 
-    public Double getCreditFunds() {
-        return creditFunds;
+    public double getFunds() {
+        return funds;
     }
 
-    public void setCreditFunds(Double creditFunds) {
-        this.creditFunds = creditFunds;
-    }
-
-    public Double getDebitFunds() {
-        return debitFunds;
-    }
-
-    public void setDebitFunds(Double debitFunds) {
-        this.debitFunds = debitFunds;
+    public void setFunds(double funds) {
+        this.funds = funds;
     }
 
     @Override
@@ -46,11 +35,11 @@ public class BankAccountEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BankAccountEntity that = (BankAccountEntity) o;
-        return bankAccountNo == that.bankAccountNo && Objects.equals(creditFunds, that.creditFunds) && Objects.equals(debitFunds, that.debitFunds);
+        return bankAccountNo == that.bankAccountNo && Double.compare(that.funds, funds) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bankAccountNo, creditFunds, debitFunds);
+        return Objects.hash(bankAccountNo, funds);
     }
 }
