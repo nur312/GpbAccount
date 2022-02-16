@@ -1,6 +1,7 @@
 package gpb.account.controllers;
 
 
+import gpb.account.dto.Account;
 import gpb.account.entity.AccountEntity;
 import gpb.account.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AccountController {
 
 
     @PostMapping
-    public ResponseEntity createAccount(@RequestBody AccountEntity account) {
+    public ResponseEntity createAccount(@RequestBody Account account) {
 
         // ToDo: добавть в сервис логику создания элемента.
 
