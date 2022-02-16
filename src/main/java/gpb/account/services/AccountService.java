@@ -1,5 +1,6 @@
 package gpb.account.services;
 
+import gpb.account.dto.Account;
 import gpb.account.entity.AccountEntity;
 import gpb.account.repo.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,11 +60,18 @@ public class AccountService {
         return account.getActualBalance();
     }
 
-    public void createAccount(AccountEntity account) {
-
-
+    public void createAccount(Account account) {
+        if(account.getClientId() == null || account.getClientType() == null || account.getAccountType() == null){
+            throw new IllegalArgumentException();
+        }
+        AccountEntity accountEntity = new AccountEntity();
+        accountEntity.setClientType(account.getClientType());
+        accountEntity.setClientId(account.getClientId());
+        accountEntity.setAccountType(account.getAccountType());
+        accountEntity.setFrozen(false);
+        accountEntity.setActualBalance(0.0);
         // ToDo: при создании баланса не должно быть итд
 
-        accountRepo.save(account);
+        accountRepo.save(accountEntity);
     }
 }

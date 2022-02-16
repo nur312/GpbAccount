@@ -13,13 +13,13 @@ import java.util.List;
 public class Account {
 
     private Long accountNumber;
-    private Long clientId;
-    private Long accountId;
-    private BigDecimal balance;
-    private List<Operation> history;
-    private Long historyId;
+    private Integer clientId;
+    private Double balance;
     private Boolean isFrozen;
-
     private ClientType clientType;
     private AccountType accountType;
 }
+//Todo
+// private Long accountId;  есть мнение, что это дубликат и он не нужен!!!
+//  private List<Operation> history;
+//  private Long historyId;
