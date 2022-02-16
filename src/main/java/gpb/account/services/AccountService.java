@@ -10,6 +10,13 @@ public class AccountService {
 
     private final AccountRepo accountRepo;
 
+    private void throwExIdDoesNotExist(int account_no) {
+        boolean exists = accountRepo.existsById(account_no);
+        if (!exists) {
+            throw new IllegalArgumentException("No such account with account_no = " + account_no);
+        }
+    }
+
     @Autowired
     public AccountService(AccountRepo accountRepo) {
         this.accountRepo = accountRepo;
@@ -17,11 +24,7 @@ public class AccountService {
 
     public void deposit(int account_no, double amount) {
 
-        boolean exists = accountRepo.existsById(account_no);
-
-        if (!exists) {
-            throw new IllegalArgumentException("No such account with account_no = " + account_no);
-        }
+        throwExIdDoesNotExist(account_no);
 
         // SELECT * FROM account WHERE account_no = {account_no}
         AccountEntity account = accountRepo.getById(account_no);
@@ -34,10 +37,9 @@ public class AccountService {
     }
 
     public void withdraw(int account_no, double amount) {
-        boolean exists = accountRepo.existsById(account_no);
-        if (!exists) {
-            throw new IllegalArgumentException("No such account with account_no = " + account_no);
-        }
+
+        throwExIdDoesNotExist(account_no);
+
         AccountEntity account = accountRepo.getById(account_no);
 
         double newActualBalance = account.getActualBalance() - amount;
@@ -49,10 +51,8 @@ public class AccountService {
     }
 
     public double getActualBalance(int account_no) {
-        boolean exists = accountRepo.existsById(account_no);
-        if (!exists) {
-            throw new IllegalArgumentException("No such account with account_no = " + account_no);
-        }
+
+        throwExIdDoesNotExist(account_no);
 
         AccountEntity account = accountRepo.getById(account_no);
 
@@ -60,6 +60,7 @@ public class AccountService {
     }
 
     public void createAccount(AccountEntity account) {
+
 
         // ToDo: при создании баланса не должно быть итд
 
