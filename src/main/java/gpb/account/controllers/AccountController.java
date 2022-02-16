@@ -26,6 +26,7 @@ public class AccountController {
 
         // ToDo: добавть в сервис логику создания элемента.
 
+        accountService.createAccount(account);
         String answer = "account created";
         return ResponseEntity.ok(answer);
     }

@@ -12,7 +12,7 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "account_no")
-    private int accountNo;
+    private Integer accountNo;
     @Basic
     @Column(name = "client_id")
     private Integer clientId;
@@ -35,11 +35,11 @@ public class AccountEntity {
     @Column(name = "client_type")
     private ClientType clientType;
 
-    public int getAccountNo() {
+    public Integer getAccountNo() {
         return accountNo;
     }
 
-    public void setAccountNo(int accountNo) {
+    public void setAccountNo(Integer accountNo) {
         this.accountNo = accountNo;
     }
 
