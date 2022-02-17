@@ -1,6 +1,7 @@
 package gpb.account.services;
 
 import gpb.account.dto.Account;
+import gpb.account.dto.Operation;
 import gpb.account.entity.AccountEntity;
 import gpb.account.repo.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +24,36 @@ public class AccountService {
         this.accountRepo = accountRepo;
     }
 
-    public void deposit(int account_no, double amount) {
+    public void deposit(Operation operation) {
 
-        throwExIdDoesNotExist(account_no);
+        if(operation.getAccountNo() == null || operation.getAmount() <= 0){
+            throw new IllegalArgumentException();
+        }
+
+        throwExIdDoesNotExist(operation.getAccountNo());
 
         // SELECT * FROM account WHERE account_no = {account_no}
-        AccountEntity account = accountRepo.getById(account_no);
+        AccountEntity account = accountRepo.getById(operation.getAccountNo());
 
-        double newActualBalance = account.getActualBalance() + amount;
+        double newActualBalance = account.getActualBalance() + operation.getAmount();
 
         account.setActualBalance(newActualBalance);
 
         accountRepo.save(account);
     }
 
-    public void withdraw(int account_no, double amount) {
+    public void withdraw(Operation operation) {
+        if(operation.getAccountNo() == null || operation.getAmount() <= 0){
+            throw new IllegalArgumentException();
+        }
 
-        throwExIdDoesNotExist(account_no);
+        throwExIdDoesNotExist(operation.getAccountNo());
 
-        AccountEntity account = accountRepo.getById(account_no);
+        AccountEntity account = accountRepo.getById(operation.getAccountNo());
 
-        double newActualBalance = account.getActualBalance() - amount;
+        double newActualBalance = account.getActualBalance() - operation.getAmount();
         if (newActualBalance < 0) {
-            throw new IllegalStateException("Balance cannot be negative for " + account_no);
+            throw new IllegalStateException("Balance cannot be negative for " + operation.getAccountNo());
         }
         account.setActualBalance(newActualBalance);
         accountRepo.save(account);
