@@ -12,7 +12,12 @@ public class AccountService {
 
     private final AccountRepo accountRepo;
 
-    private void throwExIdDoesNotExist(int account_no) {
+    private void throwExIdDoesNotExist(Integer account_no) {
+
+        if (account_no == null) {
+            throw new IllegalArgumentException("No such account with account_no = " + account_no);
+        }
+
         boolean exists = accountRepo.existsById(account_no);
         if (!exists) {
             throw new IllegalArgumentException("No such account with account_no = " + account_no);
@@ -26,7 +31,7 @@ public class AccountService {
 
     public void deposit(Operation operation) {
 
-        if(operation.getAccountNo() == null || operation.getAmount() <= 0){
+        if (operation.getAccountNo() == null || operation.getAmount() <= 0) {
             throw new IllegalArgumentException();
         }
 
@@ -43,7 +48,7 @@ public class AccountService {
     }
 
     public void withdraw(Operation operation) {
-        if(operation.getAccountNo() == null || operation.getAmount() <= 0){
+        if (operation.getAccountNo() == null || operation.getAmount() <= 0) {
             throw new IllegalArgumentException();
         }
 
@@ -59,7 +64,7 @@ public class AccountService {
         accountRepo.save(account);
     }
 
-    public double getActualBalance(int account_no) {
+    public double getActualBalance(Integer account_no) {
 
         throwExIdDoesNotExist(account_no);
 
@@ -69,7 +74,7 @@ public class AccountService {
     }
 
     public void createAccount(Account account) {
-        if(account.getClientId() == null || account.getClientType() == null || account.getAccountType() == null){
+        if (account.getClientId() == null || account.getClientType() == null || account.getAccountType() == null) {
             throw new IllegalArgumentException();
         }
         AccountEntity accountEntity = new AccountEntity();

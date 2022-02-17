@@ -40,15 +40,16 @@ public class AccountController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity withdrawFunds(@RequestBody Operation operation){
+    public ResponseEntity withdrawFunds(@RequestBody Operation operation) {
         accountService.withdraw(operation);
         String answer = "funds were withdrawn";
         return ResponseEntity.ok(answer);
     }
-    @GetMapping
-    public String temp() {
 
-        return "Hello GbpAccount!";
+    @GetMapping("/{account_no}")
+    public Operation getActualBalance(@PathVariable Integer account_no) {
+
+        return new Operation(account_no, accountService.getActualBalance(account_no));
     }
 
 
