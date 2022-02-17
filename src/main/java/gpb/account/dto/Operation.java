@@ -10,8 +10,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Operation {
-    private Account sender;
-    private Account receiver;
-    private BigDecimal amount;
-    private String date;
+    private Integer accountNo;
+    private Double amount;
 }

@@ -2,6 +2,7 @@ package gpb.account.controllers;
 
 
 import gpb.account.dto.Account;
+import gpb.account.dto.Operation;
 import gpb.account.entity.AccountEntity;
 import gpb.account.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,19 @@ public class AccountController {
         return ResponseEntity.ok(answer);
     }
 
+    @PostMapping("/deposit")
+    public ResponseEntity depositFunds(@RequestBody Operation operation) {
+        accountService.deposit(operation);
+        String answer = "funds were deposited";
+        return ResponseEntity.ok(answer);
+    }
+
+    @PostMapping("/withdraw")
+    public ResponseEntity withdrawFunds(@RequestBody Operation operation){
+        accountService.withdraw(operation);
+        String answer = "funds were withdrawn";
+        return ResponseEntity.ok(answer);
+    }
     @GetMapping
     public String temp() {
 
