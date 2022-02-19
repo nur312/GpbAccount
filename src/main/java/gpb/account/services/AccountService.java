@@ -90,15 +90,6 @@ public class AccountService {
         accountRepo.save(account);
     }
 
-    public double getActualBalance(Integer account_no) {
-
-        throwExIdDoesNotExist(account_no);
-
-        AccountEntity account = accountRepo.getById(account_no);
-
-        return account.getActualBalance();
-    }
-
     public Integer createAccount(Account account) {
         if (account.getClientId() == null || account.getClientType() == null || account.getAccountType() == null) {
             throw new IllegalArgumentException();
