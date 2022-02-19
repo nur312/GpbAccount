@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Account {
 
-    private Long accountNumber;
+    private Integer accountNumber;
     private Integer clientId;
     private Double balance;
     private Boolean isFrozen;

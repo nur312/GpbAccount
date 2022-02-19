@@ -3,10 +3,9 @@ package gpb.account.controllers;
 
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
-import gpb.account.entity.AccountEntity;
+import gpb.account.dto.ResponseDetails;
 import gpb.account.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,33 +22,57 @@ public class AccountController {
 
 
     @PostMapping
-    public ResponseEntity createAccount(@RequestBody Account account) {
+    public ResponseDetails createAccount(@RequestBody Account account) {
 
         // ToDo: добавть в сервис логику создания элемента.
 
-        accountService.createAccount(account);
-        String answer = "account created";
-        return ResponseEntity.ok(answer);
+        Integer accountNo = accountService.createAccount(account);
+
+
+        return new ResponseDetails(accountNo, "account had been created", true);
     }
 
+    @GetMapping("/{accountNo}")
+    public Account getAccountInfo(@PathVariable Integer accountNo) {
+
+
+        return accountService.getAccount(accountNo);
+    }
+
+
     @PostMapping("/deposit")
-    public ResponseEntity depositFunds(@RequestBody Operation operation) {
+    public ResponseDetails depositFunds(@RequestBody Operation operation) {
         accountService.deposit(operation);
-        String answer = "funds were deposited";
-        return ResponseEntity.ok(answer);
+
+        return new ResponseDetails(operation.getAccountNo(), "funds were deposited", true);
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity withdrawFunds(@RequestBody Operation operation) {
+    public ResponseDetails withdrawFunds(@RequestBody Operation operation) {
+
+        // ToDo: подумать, стоит ли релизовать метод для перевода межу двумя счетами?
+        // Пока что не сделали, потому что есть другой сервис, который этим занимается
+
         accountService.withdraw(operation);
-        String answer = "funds were withdrawn";
-        return ResponseEntity.ok(answer);
+
+        return new ResponseDetails(operation.getAccountNo(), "funds were withdrawn", true);
     }
 
-    @GetMapping("/{account_no}")
-    public Operation getActualBalance(@PathVariable Integer account_no) {
+    @PostMapping("/freeze/{accountNo}")
+    public ResponseDetails freezeAccount(@PathVariable Integer accountNo) {
 
-        return new Operation(account_no, accountService.getActualBalance(account_no));
+
+        accountService.freezeAccount(accountNo);
+
+        return new ResponseDetails(accountNo, "Account was frozen", true);
+    }
+
+    @PostMapping("/unfreeze/{accountNo}")
+    public ResponseDetails unfreezeAccount(@PathVariable Integer accountNo) {
+
+        accountService.unfreezeAccount(accountNo);
+
+        return new ResponseDetails(accountNo, "Account was unfrozen", true);
     }
 
 
