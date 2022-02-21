@@ -20,6 +20,5 @@ public class Account {
     private AccountType accountType;
 }
 //Todo
-// private Long accountId;  есть мнение, что это дубликат и он не нужен!!!
 //  private List<Operation> history;
 //  private Long historyId;

@@ -24,8 +24,6 @@ public class AccountController {
     @PostMapping
     public ResponseDetails createAccount(@RequestBody Account account) {
 
-        // ToDo: добавть в сервис логику создания элемента.
-
         Integer accountNo = accountService.createAccount(account);
 
 

@@ -3,6 +3,9 @@ package gpb.account.services;
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.entity.AccountEntity;
+import gpb.account.exception.AccountFrozenException;
+import gpb.account.exception.AccountNotFoundException;
+import gpb.account.exception.NotSufficientFundsException;
 import gpb.account.repo.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,12 @@ public class AccountService {
     private void throwExIdDoesNotExist(Integer account_no) {
 
         if (account_no == null) {
-            throw new IllegalArgumentException("No such account with account_no = " + account_no);
+            throw new AccountNotFoundException("No such account with account_no = " + account_no);
         }
 
         boolean exists = accountRepo.existsById(account_no);
         if (!exists) {
-            throw new IllegalArgumentException("No such account with account_no = " + account_no);
+            throw new AccountNotFoundException("No such account with account_no = " + account_no);
         }
     }
 
@@ -28,7 +31,7 @@ public class AccountService {
 
         if (account.getFrozen()) {
 
-            throw new IllegalStateException("Account is frozen " + account.getAccountNo());
+            throw new AccountFrozenException("Account is frozen " + account.getAccountNo());
         }
     }
 
@@ -70,7 +73,7 @@ public class AccountService {
 
     public void withdraw(Operation operation) {
         if (operation.getAccountNo() == null || operation.getAmount() <= 0) {
-            throw new IllegalArgumentException();
+            throw new NotSufficientFundsException("No funds for operation");
         }
 
         throwExIdDoesNotExist(operation.getAccountNo());
@@ -82,7 +85,7 @@ public class AccountService {
 
         double newActualBalance = account.getActualBalance() - operation.getAmount();
         if (newActualBalance < 0) {
-            throw new IllegalStateException("Balance cannot be negative for " + operation.getAccountNo());
+            throw new NotSufficientFundsException("Balance cannot be negative for " + operation.getAccountNo());
         }
 
 
@@ -100,7 +103,7 @@ public class AccountService {
         accountEntity.setAccountType(account.getAccountType());
         accountEntity.setFrozen(false);
         accountEntity.setActualBalance(0.0);
-        // ToDo: при создании баланса не должно быть итд
+        // ToDo: при создании баланса не должно быть итд ?
 
         accountEntity = accountRepo.save(accountEntity);
 
