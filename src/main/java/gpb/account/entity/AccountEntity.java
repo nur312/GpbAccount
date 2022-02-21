@@ -2,22 +2,20 @@ package gpb.account.entity;
 
 import gpb.account.dto.AccountType;
 import gpb.account.dto.ClientType;
-
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "account", schema = "public", catalog = "postgres")
+@Table(name = "account", schema = "public", catalog = "GpbAccountDatabase")
 public class AccountEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_no")
     private Integer accountNo;
     @Basic
     @Column(name = "client_id")
     private Integer clientId;
 
-    // ToDo Уточнить как будем хранить деньги
     @Basic
     @Column(name = "actual_balance")
     private Double actualBalance;
