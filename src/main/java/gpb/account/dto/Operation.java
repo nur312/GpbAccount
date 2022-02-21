@@ -12,4 +12,5 @@ import java.math.BigDecimal;
 public class Operation {
     private Integer accountNo;
     private Double amount;
+    //TODO уточнить как работает Jackson с Double?
 }
