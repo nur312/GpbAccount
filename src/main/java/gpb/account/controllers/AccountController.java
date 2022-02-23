@@ -30,10 +30,7 @@ public class AccountController {
     @PostMapping
     public ResponseDetails createAccount(@RequestBody Account account) {
 
-        // ToDo: добавть в сервис логику создания элемента.
-
         Integer accountNo = accountCrudService.createAccount(account);
-
 
         return new ResponseDetails(accountNo, "account had been created", true);
     }

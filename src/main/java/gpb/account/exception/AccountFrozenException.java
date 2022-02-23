@@ -1,17 +1,9 @@
 package gpb.account.exception;
 
-import gpb.account.entity.AccountEntity;
-
-public class AccountFrozenException extends RuntimeException {
-
-    private Integer accountNo;
-    public Integer getAccountNo(Integer accountNo){
-        return accountNo;
-    }
+public class AccountFrozenException extends CustomException {
 
     public AccountFrozenException(String message, Integer accountNum){
-        super(message);
-        accountNo = accountNum;
+        super(message, accountNum);
     }
 
 }

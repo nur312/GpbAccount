@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ResponseDetails {
     private Integer accountNo;
     private String message;
-    private Boolean isOk;
+    private Boolean isOk = true;
 }

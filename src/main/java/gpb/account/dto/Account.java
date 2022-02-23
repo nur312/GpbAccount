@@ -19,6 +19,3 @@ public class Account {
     private ClientType clientType;
     private AccountType accountType;
 }
-//Todo
-//  private List<Operation> history;
-//  private Long historyId;
