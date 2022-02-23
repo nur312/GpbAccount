@@ -4,20 +4,26 @@ package gpb.account.controllers;
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
-import gpb.account.services.AccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import gpb.account.services.accountservice.AccountAccessibilityServiceImpl;
+import gpb.account.services.accountservice.AccountCrudServiceImpl;
+import gpb.account.services.accountservice.AccountTransferServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
 public class AccountController {
 
-    private final AccountService accountService;
 
+    private final AccountAccessibilityServiceImpl accountAccessibilityService;
 
-    @Autowired
-    public AccountController(AccountService accountService) {
-        this.accountService = accountService;
+    private final AccountCrudServiceImpl accountCrudService;
+
+    private final AccountTransferServiceImpl accountTransferService;
+
+    public AccountController(AccountAccessibilityServiceImpl accountAccessibilityService, AccountCrudServiceImpl accountCrudService, AccountTransferServiceImpl accountTransferService) {
+        this.accountAccessibilityService = accountAccessibilityService;
+        this.accountCrudService = accountCrudService;
+        this.accountTransferService = accountTransferService;
     }
 
 
@@ -26,7 +32,7 @@ public class AccountController {
 
         // ToDo: добавть в сервис логику создания элемента.
 
-        Integer accountNo = accountService.createAccount(account);
+        Integer accountNo = accountCrudService.createAccount(account);
 
 
         return new ResponseDetails(accountNo, "account had been created", true);
@@ -36,13 +42,14 @@ public class AccountController {
     public Account getAccountInfo(@PathVariable Integer accountNo) {
 
 
-        return accountService.getAccount(accountNo);
+        return accountCrudService.getAccount(accountNo);
     }
 
 
     @PostMapping("/deposit")
     public ResponseDetails depositFunds(@RequestBody Operation operation) {
-        accountService.deposit(operation);
+
+        accountTransferService.deposit(operation);
 
         return new ResponseDetails(operation.getAccountNo(), "funds were deposited", true);
     }
@@ -53,7 +60,7 @@ public class AccountController {
         // ToDo: подумать, стоит ли релизовать метод для перевода межу двумя счетами?
         // Пока что не сделали, потому что есть другой сервис, который этим занимается
 
-        accountService.withdraw(operation);
+        accountTransferService.withdraw(operation);
 
         return new ResponseDetails(operation.getAccountNo(), "funds were withdrawn", true);
     }
@@ -62,7 +69,7 @@ public class AccountController {
     public ResponseDetails freezeAccount(@PathVariable Integer accountNo) {
 
 
-        accountService.freezeAccount(accountNo);
+        accountAccessibilityService.freezeAccount(accountNo);
 
         return new ResponseDetails(accountNo, "Account was frozen", true);
     }
@@ -70,7 +77,7 @@ public class AccountController {
     @PostMapping("/unfreeze/{accountNo}")
     public ResponseDetails unfreezeAccount(@PathVariable Integer accountNo) {
 
-        accountService.unfreezeAccount(accountNo);
+        accountAccessibilityService.unfreezeAccount(accountNo);
 
         return new ResponseDetails(accountNo, "Account was unfrozen", true);
     }
