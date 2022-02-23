@@ -2,6 +2,7 @@ package gpb.account.services.accountservice;
 
 import gpb.account.dto.Account;
 import gpb.account.entity.AccountEntity;
+import gpb.account.exception.InvalidJsonException;
 import gpb.account.repo.AccountRepo;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class AccountCrudServiceImpl implements AccountCrudService{
 
     public Integer createAccount(Account account) {
         if (account.getClientId() == null || account.getClientType() == null || account.getAccountType() == null) {
-            throw new IllegalArgumentException();
+            throw new InvalidJsonException("Invalid JSON data", account.getAccountNumber());
         }
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setClientType(account.getClientType());
@@ -35,7 +36,6 @@ public class AccountCrudServiceImpl implements AccountCrudService{
         accountEntity.setAccountType(account.getAccountType());
         accountEntity.setFrozen(false);
         accountEntity.setActualBalance(0.0);
-        // ToDo: при создании баланса не должно быть итд
 
         accountEntity = accountRepo.save(accountEntity);
 

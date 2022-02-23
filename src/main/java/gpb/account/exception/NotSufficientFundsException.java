@@ -1,7 +1,8 @@
 package gpb.account.exception;
 
-public class NotSufficientFundsException extends RuntimeException {
-    public NotSufficientFundsException(String message){
-        super(message);
+public class NotSufficientFundsException extends CustomException {
+
+    public NotSufficientFundsException(String message, Integer accountNum){
+        super(message, accountNum);
     }
 }

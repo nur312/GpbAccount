@@ -2,6 +2,8 @@ package gpb.account.services.accountservice;
 
 import gpb.account.dto.Operation;
 import gpb.account.entity.AccountEntity;
+import gpb.account.exception.InvalidJsonException;
+import gpb.account.exception.NotSufficientFundsException;
 import gpb.account.repo.AccountRepo;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class AccountTransferServiceImpl implements AccountTransferService{
     public void deposit(Operation operation) {
 
         if (operation.getAccountNo() == null || operation.getAmount() <= 0) {
-            throw new IllegalArgumentException();
+            throw new InvalidJsonException("Invalid JSON data for deposit", operation.getAccountNo());
         }
 
         Helper.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
@@ -36,7 +38,7 @@ public class AccountTransferServiceImpl implements AccountTransferService{
 
     public void withdraw(Operation operation) {
         if (operation.getAccountNo() == null || operation.getAmount() <= 0) {
-            throw new IllegalArgumentException();
+            throw new InvalidJsonException("Invalid JSON data for withdraw", operation.getAccountNo());
         }
 
         Helper.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
@@ -48,7 +50,7 @@ public class AccountTransferServiceImpl implements AccountTransferService{
 
         double newActualBalance = account.getActualBalance() - operation.getAmount();
         if (newActualBalance < 0) {
-            throw new IllegalStateException("Balance cannot be negative for " + operation.getAccountNo());
+            throw new NotSufficientFundsException("Balance cannot be negative", operation.getAccountNo());
         }
 
 

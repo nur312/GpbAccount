@@ -12,37 +12,38 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class ExceptionHandlers {
 
+    private ResponseEntity<ResponseDetails> createResponse(String message, Integer accountNo, HttpStatus status){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseDetails responseDetails = new ResponseDetails();
+        responseDetails.setMessage(message);
+        responseDetails.setAccountNo(accountNo);
+        responseDetails.setIsOk(false);
+        return new ResponseEntity<>(responseDetails, headers, status);
+    }
+
     @ExceptionHandler({AccountFrozenException.class})
     public ResponseEntity<ResponseDetails> handleAccountFrozenException (AccountFrozenException ex){
-        ResponseDetails responseDetails = new ResponseDetails();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        responseDetails.setMessage(ex.getMessage());
-        return new ResponseEntity<>(responseDetails, headers, HttpStatus.LOCKED); //TODO LOCKED?
+
+        return createResponse(ex.getMessage(), ex.getAccountNo(), HttpStatus.LOCKED);
     }
+
     @ExceptionHandler({AccountNotFoundException.class})
     public ResponseEntity<ResponseDetails> handleAccountNotFoundException (AccountNotFoundException ex){
-        ResponseDetails responseDetails = new ResponseDetails();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        responseDetails.setMessage(ex.getMessage());
-        return new ResponseEntity<>(responseDetails, headers, HttpStatus.NOT_FOUND); //TODO LOCKED?
+
+        return createResponse(ex.getMessage(), ex.getAccountNo(), HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler({NotSufficientFundsException.class})
     public ResponseEntity<ResponseDetails> handleNotSufficientFundsException (NotSufficientFundsException ex){
-        ResponseDetails responseDetails = new ResponseDetails();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        responseDetails.setMessage(ex.getMessage());
-        return new ResponseEntity<>(responseDetails, headers, HttpStatus.NOT_ACCEPTABLE); //TODO ?
+
+       return createResponse(ex.getMessage(), ex.getAccountNo(), HttpStatus.NOT_ACCEPTABLE);
     }
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<ResponseDetails> handleIllegalArgumentException (IllegalArgumentException ex){
-        ResponseDetails responseDetails = new ResponseDetails();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        responseDetails.setMessage(ex.getMessage());
-        return new ResponseEntity<>(responseDetails, headers, HttpStatus.BAD_REQUEST);
+
+    @ExceptionHandler({InvalidJsonException.class})
+    public ResponseEntity<ResponseDetails> handleInvalidJsonException (InvalidJsonException ex){
+
+        return createResponse(ex.getMessage(), ex.getAccountNo(), HttpStatus.BAD_REQUEST);
         //TODO Оставить этот эксепшн или написать свой?
     }
 }

@@ -14,8 +14,7 @@ public class AccountAccessibilityServiceImpl implements AccountAccessibilityServ
     }
 
     public void freezeAccount(Integer account_no) {
-        // ToDo: можно ли в контроллере передвавть boolean, чтобы сразу здесь установить?
-        // Пока что мы считаем, что это логика хоть и простая, поэтому разделили
+
         Helper.throwExIdDoesNotExist(account_no, accountRepo);
 
         AccountEntity account = accountRepo.getById(account_no);
