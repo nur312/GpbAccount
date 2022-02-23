@@ -4,9 +4,7 @@ package gpb.account.controllers;
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
-import gpb.account.services.accountservice.AccountAccessibilityServiceImpl;
-import gpb.account.services.accountservice.AccountCrudServiceImpl;
-import gpb.account.services.accountservice.AccountTransferServiceImpl;
+import gpb.account.services.accountservice.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
 
-    private final AccountAccessibilityServiceImpl accountAccessibilityService;
+    private final AccountAccessibilityService accountAccessibilityService;
 
-    private final AccountCrudServiceImpl accountCrudService;
+    private final AccountCrudService accountCrudService;
 
-    private final AccountTransferServiceImpl accountTransferService;
+    private final AccountTransferService accountTransferService;
 
     public AccountController(AccountAccessibilityServiceImpl accountAccessibilityService, AccountCrudServiceImpl accountCrudService, AccountTransferServiceImpl accountTransferService) {
         this.accountAccessibilityService = accountAccessibilityService;
