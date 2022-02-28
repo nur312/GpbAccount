@@ -52,9 +52,6 @@ public class AccountController {
     @PostMapping("/withdraw")
     public ResponseDetails withdrawFunds(@RequestBody Operation operation) {
 
-        // ToDo: подумать, стоит ли релизовать метод для перевода межу двумя счетами?
-        // Пока что не сделали, потому что есть другой сервис, который этим занимается
-
         accountTransferService.withdraw(operation);
 
         return new ResponseDetails(operation.getAccountNo(), "funds were withdrawn", true);

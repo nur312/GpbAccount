@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "account", schema = "public", catalog = "GpbAccountDatabase")
+@Table(name = "account", schema = "public", catalog = "postgres")
 public class AccountEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
