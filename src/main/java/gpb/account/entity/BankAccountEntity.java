@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "bank_account", schema = "public", catalog = "GpbAccountDatabase")
+@Table(name = "bank_account", schema = "public", catalog = "postgres")
 public class BankAccountEntity {
 
     @Id

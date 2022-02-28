@@ -44,6 +44,5 @@ public class ExceptionHandlers {
     public ResponseEntity<ResponseDetails> handleInvalidJsonException (InvalidJsonException ex){
 
         return createResponse(ex.getMessage(), ex.getAccountNo(), HttpStatus.BAD_REQUEST);
-        //TODO Оставить этот эксепшн или написать свой?
     }
 }

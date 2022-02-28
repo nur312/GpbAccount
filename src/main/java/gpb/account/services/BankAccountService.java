@@ -2,6 +2,7 @@ package gpb.account.services;
 
 
 import gpb.account.entity.BankAccountEntity;
+import gpb.account.exception.NotSufficientFundsException;
 import gpb.account.repo.BankAccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,38 +11,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class BankAccountService {
     private final BankAccountRepo bankAccountRepo;
+    private final Integer bankAccountNo;
 
     @Autowired
-    public BankAccountService(BankAccountRepo bankAccountRepo) {
+    public BankAccountService(BankAccountRepo bankAccountRepo, @Value("${bank.account}") Integer bankAccountNo) {
+
         this.bankAccountRepo = bankAccountRepo;
+        this.bankAccountNo = bankAccountNo;
+
+        if(!bankAccountRepo.existsById(bankAccountNo)) {
+
+            var bankAccount = new BankAccountEntity();
+
+            bankAccount.setBankAccountNo(bankAccountNo);
+            bankAccount.setFunds(0.0);
+
+            bankAccountRepo.save(bankAccount);
+        }
     }
 
-    public void deposit(double amount, @Value("${bank-account-no}") String Id) {
+    public void deposit(double amount) {
 
-//        ToDo спросить про банк аккаунт номер(пока заглушка = 0)
-        BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
+        BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
         double newDepositedFunds = bankAccount.getFunds() + amount;
 
         bankAccount.setFunds(newDepositedFunds);
         bankAccountRepo.save(bankAccount);
     }
 
-    public void withdraw(double amount, @Value("${bank-account-no}") String Id) {
-//      ToDo докурутить логику выдачи кредитов(оставить одну переменную в базе для аккаунта)
-        BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
+    public void withdraw(double amount) {
+
+        BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
 
         double newCreditedFunds = bankAccount.getFunds() - amount;
         if (newCreditedFunds < 0) {
 
-            throw new IllegalStateException("Noе enough money to withdraw");
+            throw new NotSufficientFundsException("No enough money to withdraw from bank", null);
         }
         bankAccount.setFunds(newCreditedFunds);
         bankAccountRepo.save(bankAccount);
     }
 
-    public  double getActualBalance(@Value("${bank-account-no}") String Id) {
+    public  double getActualBalance() {
 
-        BankAccountEntity bankAccount = bankAccountRepo.getById(Integer.parseInt(Id));
+        BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
 
         return bankAccount.getFunds();
     }
