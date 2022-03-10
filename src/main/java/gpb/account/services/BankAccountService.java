@@ -2,6 +2,7 @@ package gpb.account.services;
 
 
 import gpb.account.entity.BankAccountEntity;
+import gpb.account.exception.InvalidJsonException;
 import gpb.account.exception.NotSufficientFundsException;
 import gpb.account.repo.BankAccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class BankAccountService {
     public void deposit(double amount) {
 
         BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
+        if (amount <= 0.0) {
+            throw new InvalidJsonException("Amount cannot be equal  or less than  zero", 0);
+        }
         double newDepositedFunds = bankAccount.getFunds() + amount;
 
         bankAccount.setFunds(newDepositedFunds);
@@ -42,7 +46,9 @@ public class BankAccountService {
     public void withdraw(double amount) {
 
         BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
-
+        if (amount <= 0.0) {
+            throw new InvalidJsonException("Amount cannot be equal  or less than  zero", 0);
+        }
         double newCreditedFunds = bankAccount.getFunds() - amount;
         if (newCreditedFunds < 0) {
 
