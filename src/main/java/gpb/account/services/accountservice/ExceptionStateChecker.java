@@ -3,7 +3,7 @@ package gpb.account.services.accountservice;
 import gpb.account.entity.AccountEntity;
 import gpb.account.repo.AccountRepo;
 
-public class Helper {
+public class ExceptionStateChecker {
 
     public static void throwExIdDoesNotExist(Integer account_no, final AccountRepo accountRepo) {
 
