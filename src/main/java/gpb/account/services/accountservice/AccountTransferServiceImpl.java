@@ -22,12 +22,12 @@ public class AccountTransferServiceImpl implements AccountTransferService{
             throw new InvalidJsonException("Invalid JSON data for deposit", operation.getAccountNo());
         }
 
-        Helper.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
+        ExceptionStateChecker.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
 
         // SELECT * FROM account WHERE account_no = {account_no}
         AccountEntity account = accountRepo.getById(operation.getAccountNo());
 
-        Helper.throwExIfAccountFrozen(account, accountRepo);
+        ExceptionStateChecker.throwExIfAccountFrozen(account, accountRepo);
 
         double newActualBalance = account.getActualBalance() + operation.getAmount();
 
@@ -41,12 +41,12 @@ public class AccountTransferServiceImpl implements AccountTransferService{
             throw new InvalidJsonException("Invalid JSON data for withdraw", operation.getAccountNo());
         }
 
-        Helper.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
+        ExceptionStateChecker.throwExIdDoesNotExist(operation.getAccountNo(), accountRepo);
 
         AccountEntity account = accountRepo.getById(operation.getAccountNo());
 
 
-        Helper.throwExIfAccountFrozen(account, accountRepo);
+        ExceptionStateChecker.throwExIfAccountFrozen(account, accountRepo);
 
         double newActualBalance = account.getActualBalance() - operation.getAmount();
         if (newActualBalance < 0) {

@@ -17,7 +17,7 @@ public class AccountCrudServiceImpl implements AccountCrudService{
 
     public Account getAccount(Integer accountNo) {
 
-        Helper.throwExIdDoesNotExist(accountNo, accountRepo);
+        ExceptionStateChecker.throwExIdDoesNotExist(accountNo, accountRepo);
 
         AccountEntity accountEntity = accountRepo.getById(accountNo);
 

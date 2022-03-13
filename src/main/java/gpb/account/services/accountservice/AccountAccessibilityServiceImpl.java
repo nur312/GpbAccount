@@ -15,7 +15,7 @@ public class AccountAccessibilityServiceImpl implements AccountAccessibilityServ
 
     public void freezeAccount(Integer account_no) {
 
-        Helper.throwExIdDoesNotExist(account_no, accountRepo);
+        ExceptionStateChecker.throwExIdDoesNotExist(account_no, accountRepo);
 
         AccountEntity account = accountRepo.getById(account_no);
 
@@ -27,7 +27,7 @@ public class AccountAccessibilityServiceImpl implements AccountAccessibilityServ
 
     public void unfreezeAccount(Integer account_no) {
 
-        Helper.throwExIdDoesNotExist(account_no, accountRepo);
+        ExceptionStateChecker.throwExIdDoesNotExist(account_no, accountRepo);
         AccountEntity account = accountRepo.getById(account_no);
 
         account.setFrozen(false);
