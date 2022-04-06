@@ -1,9 +1,10 @@
-package gpb.account.services;
+package gpb.account.controllers;
 
 
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
+import gpb.account.services.AccountService;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

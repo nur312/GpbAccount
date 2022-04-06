@@ -15,16 +15,16 @@ public class BankAccountService {
     private final Integer bankAccountNo;
 
     @Autowired
-    public BankAccountService(BankAccountRepo bankAccountRepo, @Value("12345") Integer bankAccountNo) {
+    public BankAccountService(BankAccountRepo bankAccountRepo, @Value("${bank.account}") Integer bankAccountNo) {
 
         this.bankAccountRepo = bankAccountRepo;
         this.bankAccountNo = bankAccountNo;
 
-        if(!bankAccountRepo.existsById(bankAccountNo)) {
+        if (!bankAccountRepo.existsById(this.bankAccountNo)) {
 
             var bankAccount = new BankAccountEntity();
 
-            bankAccount.setBankAccountNo(bankAccountNo);
+            bankAccount.setBankAccountNo(this.bankAccountNo);
             bankAccount.setFunds(0.0);
 
             bankAccountRepo.save(bankAccount);
@@ -58,7 +58,7 @@ public class BankAccountService {
         bankAccountRepo.save(bankAccount);
     }
 
-    public  double getActualBalance() {
+    public double getActualBalance() {
 
         BankAccountEntity bankAccount = bankAccountRepo.getById(bankAccountNo);
 
