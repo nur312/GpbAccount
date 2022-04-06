@@ -5,9 +5,16 @@ import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
 import gpb.account.services.accountservice.*;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
+
 @RequestMapping("/account")
 public class AccountController {
 
@@ -24,7 +31,6 @@ public class AccountController {
         this.accountTransferService = accountTransferService;
     }
 
-
     @PostMapping
     public ResponseDetails createAccount(@RequestBody Account account) {
 
@@ -34,14 +40,21 @@ public class AccountController {
     }
 
     @GetMapping("/{accountNo}")
+    @Description(value = "Вставить номер аккаунта")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Положить деньги на счет")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "запрос аккаунта выполнен"),
+            @ApiResponse(responseCode = "404", description = "Not Available", content = @Content(mediaType = "application/json"))})
     public Account getAccountInfo(@PathVariable Integer accountNo) {
-
-
         return accountCrudService.getAccount(accountNo);
     }
 
-
     @PostMapping("/deposit")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Положить деньги на счет")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Дома", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Not Available", content = @Content)
+    })
     public ResponseDetails depositFunds(@RequestBody Operation operation) {
 
         accountTransferService.deposit(operation);

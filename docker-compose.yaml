@@ -1,19 +1,19 @@
-version: '3'
-
+version: '3.1'
 services:
-
-  postgres:
-    image: 'postgres:14.2'
-    container_name: 'java-postgres'
+  db:
+    image: 'postgres:13.6-alpine'
+    ports:
+      - 5432:5432
     environment:
-      - 'POSTGRES_USER=postgres'
-      - 'POSTGRES_PASSWORD=postgres'
-      - 'POSTGRES_DB=postgres'
-
+      - POSTGRES_PASSWORD=Sveta123
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=GpbAccountDatabase
   app:
-    image: 'docker-gpb-account:latest'
+    container_name: account-service
+    image: app-account-service:latest
     build: ./
-    container_name: 'gpb-account'
     ports:
       - 8080:8080
+    depends_on:
+      - db
 

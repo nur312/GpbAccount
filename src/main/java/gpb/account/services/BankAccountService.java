@@ -15,7 +15,7 @@ public class BankAccountService {
     private final Integer bankAccountNo;
 
     @Autowired
-    public BankAccountService(BankAccountRepo bankAccountRepo, @Value("${bank.account}") Integer bankAccountNo) {
+    public BankAccountService(BankAccountRepo bankAccountRepo, @Value("12345") Integer bankAccountNo) {
 
         this.bankAccountRepo = bankAccountRepo;
         this.bankAccountNo = bankAccountNo;
