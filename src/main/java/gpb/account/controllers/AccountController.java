@@ -4,6 +4,7 @@ package gpb.account.controllers;
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
+import gpb.account.services.AccountService;
 import gpb.account.services.accountservice.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,23 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/account")
 public class AccountController {
 
+    private final AccountService accountService;
 
-    private final AccountAccessibilityService accountAccessibilityService;
-
-    private final AccountCrudService accountCrudService;
-
-    private final AccountTransferService accountTransferService;
-
-    public AccountController(AccountAccessibilityServiceImpl accountAccessibilityService, AccountCrudServiceImpl accountCrudService, AccountTransferServiceImpl accountTransferService) {
-        this.accountAccessibilityService = accountAccessibilityService;
-        this.accountCrudService = accountCrudService;
-        this.accountTransferService = accountTransferService;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @PostMapping
     public ResponseDetails createAccount(@RequestBody Account account) {
 
-        Integer accountNo = accountCrudService.createAccount(account);
+        Integer accountNo = accountService.createAccount(account);
 
         return new ResponseDetails(accountNo, "account had been created", true);
     }
@@ -46,7 +40,7 @@ public class AccountController {
             @ApiResponse(responseCode = "200", description = "запрос аккаунта выполнен"),
             @ApiResponse(responseCode = "404", description = "Not Available", content = @Content(mediaType = "application/json"))})
     public Account getAccountInfo(@PathVariable Integer accountNo) {
-        return accountCrudService.getAccount(accountNo);
+        return accountService.getAccount(accountNo);
     }
 
     @PostMapping("/deposit")
@@ -57,7 +51,7 @@ public class AccountController {
     })
     public ResponseDetails depositFunds(@RequestBody Operation operation) {
 
-        accountTransferService.deposit(operation);
+        accountService.deposit(operation);
 
         return new ResponseDetails(operation.getAccountNo(), "funds were deposited", true);
     }
@@ -65,7 +59,7 @@ public class AccountController {
     @PostMapping("/withdraw")
     public ResponseDetails withdrawFunds(@RequestBody Operation operation) {
 
-        accountTransferService.withdraw(operation);
+        accountService.withdraw(operation);
 
         return new ResponseDetails(operation.getAccountNo(), "funds were withdrawn", true);
     }
@@ -74,7 +68,7 @@ public class AccountController {
     public ResponseDetails freezeAccount(@PathVariable Integer accountNo) {
 
 
-        accountAccessibilityService.freezeAccount(accountNo);
+        accountService.freezeAccount(accountNo);
 
         return new ResponseDetails(accountNo, "Account was frozen", true);
     }
@@ -82,7 +76,7 @@ public class AccountController {
     @PostMapping("/unfreeze/{accountNo}")
     public ResponseDetails unfreezeAccount(@PathVariable Integer accountNo) {
 
-        accountAccessibilityService.unfreezeAccount(accountNo);
+        accountService.unfreezeAccount(accountNo);
 
         return new ResponseDetails(accountNo, "Account was unfrozen", true);
     }
