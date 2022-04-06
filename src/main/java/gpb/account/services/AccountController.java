@@ -1,15 +1,12 @@
-package gpb.account.controllers;
+package gpb.account.services;
 
 
 import gpb.account.dto.Account;
 import gpb.account.dto.Operation;
 import gpb.account.dto.ResponseDetails;
-import gpb.account.services.AccountService;
-import gpb.account.services.accountservice.*;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Description;
 import org.springframework.web.bind.annotation.*;
 

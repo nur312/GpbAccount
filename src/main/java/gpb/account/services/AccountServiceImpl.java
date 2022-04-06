@@ -6,7 +6,6 @@ import gpb.account.entity.AccountEntity;
 import gpb.account.exception.InvalidJsonException;
 import gpb.account.exception.NotSufficientFundsException;
 import gpb.account.repo.AccountRepo;
-import gpb.account.services.accountservice.ExceptionStateChecker;
 import org.springframework.stereotype.Service;
 
 @Service

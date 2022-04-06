@@ -1,4 +1,4 @@
-package gpb.account.services.accountservice;
+package gpb.account.services;
 
 import gpb.account.entity.AccountEntity;
 import gpb.account.repo.AccountRepo;
