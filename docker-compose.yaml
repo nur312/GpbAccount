@@ -3,7 +3,7 @@ services:
   db:
     image: 'postgres:13.6-alpine'
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=Sveta123
       - POSTGRES_USER=postgres
@@ -13,9 +13,6 @@ services:
     image: app-account-service:latest
     build: ./
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
       - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/GpbAccountDatabase
-

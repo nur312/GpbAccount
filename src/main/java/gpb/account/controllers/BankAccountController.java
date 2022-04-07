@@ -18,6 +18,7 @@ public class BankAccountController {
 
 
     @GetMapping("/balance")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Запрос баланса банковского счета")
     public Double getActualBalance() {
 
         return bankAccountService.getActualBalance();
@@ -25,6 +26,7 @@ public class BankAccountController {
 
 
     @PostMapping("/deposit")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Зачисление средств на счет банка")
     public ResponseDetails depositFunds(@RequestBody Integer amount) {
 
         bankAccountService.deposit(amount);
@@ -33,6 +35,7 @@ public class BankAccountController {
     }
 
     @PostMapping("/withdraw")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Списание средств со счета банка")
     public ResponseDetails withdrawFunds(@RequestBody Integer amount) {
 
         bankAccountService.withdraw(amount);
